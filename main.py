@@ -11,11 +11,13 @@ def parse_arguments() -> tuple[str | None, list[str] | None]:
     args_len = len(argv)
     if args_len == 1:
         return None, None
-    if args_len > 2:
+    if args_len > 3:
         if argv[2] == 'no-excludes':
             return argv[1], None
         if argv[2] == 'ext-excludes':
-            return argv[1], argv[2:] + DEFAULT_EXCLUDES
+            return argv[1], argv[3:] + DEFAULT_EXCLUDES
+        else:
+            return argv[1], argv[2:]
     return argv[1], DEFAULT_EXCLUDES
 
 
