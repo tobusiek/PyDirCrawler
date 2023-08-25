@@ -34,7 +34,9 @@ def crawl_dir(cur_dir_path: Path, excludes: list[str] = None) -> None:
 def print_content(file_path: Path) -> None:
     with open(file_path) as file:
         try:
-            print(f'# {file.name}\n{file.read()}\n')
+            content = file.read()
+            if content:
+                print(f'# {file.name}\n{content}\n')
         except UnicodeDecodeError:
             return
 
