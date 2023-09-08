@@ -3,8 +3,13 @@ from pathlib import Path
 
 DEFAULT_EXCLUDES = [
     '.idea', 'venv', '.gitignore', '.ignore', '.env', '.env.passwords', '__pycache__', '__init__.py', 'output.txt',
-    'README.md', '.git'
+    'README.md', '.git', '.ini', 'codebase.txt'
 ]
+
+
+def print_help() -> None:
+    if len(argv) > 1 and argv[1] in ('help', '-h', '--help'):
+        print('Available commands: [--no-excludes, --ext-excludes]')
 
 
 def parse_arguments() -> tuple[str | None, list[str] | None]:
@@ -12,9 +17,9 @@ def parse_arguments() -> tuple[str | None, list[str] | None]:
     if args_len == 1:
         return None, None
     if args_len > 3:
-        if argv[2] == 'no-excludes':
+        if argv[2] == '--no-excludes':
             return argv[1], None
-        if argv[2] == 'ext-excludes':
+        if argv[2] == '--ext-excludes':
             return argv[1], argv[3:] + DEFAULT_EXCLUDES
         else:
             return argv[1], argv[2:]
@@ -23,7 +28,7 @@ def parse_arguments() -> tuple[str | None, list[str] | None]:
 
 def crawl_dir(cur_dir_path: Path, excludes: list[str] = None) -> None:
     for dir_elem in cur_dir_path.iterdir():
-        if excludes and dir_elem.name in excludes:
+        if excludes and any(dir_elem.name in excluded for excluded in excludes):
             continue
         if dir_elem.is_dir():
             crawl_dir(dir_elem, excludes)
@@ -42,6 +47,7 @@ def print_content(file_path: Path) -> None:
 
 
 def main() -> None:
+    print_help()
     crawling_dir, excludes = parse_arguments()
     if not crawling_dir:
         print('No crawling directory')

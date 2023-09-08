@@ -6,7 +6,7 @@ Tool for crawling passed directory recursively, printing to console files conten
 
 Print content of every file:
 ```console
-python main.py <path-to-dir-to-crawl> no-excludes
+python main.py <path-to-dir-to-crawl> --no-excludes
 ```
 
 Print content of every file except some files or dirs:
@@ -21,5 +21,5 @@ python main.py <path-to-dir-to-crawl>
 
 Print content of every file except mentioned above and append your own:
 ```console
-python main.py <path-to-dir-to-crawl> ext-excludes <excluded-file-1> <excluded-file-2> ...
+python main.py <path-to-dir-to-crawl> --ext-excludes <excluded-file-1> <excluded-file-2> ...
 ```
